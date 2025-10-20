@@ -18,7 +18,7 @@ default_args = {
 with DAG(
     dag_id="credit_card_transactions_dataproc_dag2",
     default_args=default_args,
-    schedule_interval="0 5 * * *",
+    schedule_interval="0 11 * * *",
 ) as dag:
 
     # GCS Config
