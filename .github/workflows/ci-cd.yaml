@@ -3,7 +3,7 @@ name: Credit Card Transaction CICD
 on:
   push:
     branches:
-      - main   # ✅ space required after "-"
+      - main
 
 jobs:
   run-tests:
@@ -24,7 +24,7 @@ jobs:
           pip install pytest pytest-cov
 
       - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV   # ✅ use "=" instead of "+"
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
       - name: Run Pytest with Coverage
         run: pytest --cov=data --cov-report=term --cov-fail-under=80 tests/spark_job_test.py
@@ -38,28 +38,26 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Authenticate to GCP
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{secrets.GCP_SA_KEY}}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Setup Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{secrets.GCP_PROJECT_ID}}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
 
-      # Upload PySpark Job to GCS
+      # ✅ Upload PySpark Job to GCS
       - name: Upload Spark Job to GCS
-        run:
+        run: |
           gsutil cp data/spark_job.py gs://avd-buck-credit-card-analysis/spark_job/
           gsutil cp data/load_users_to_bq.py gs://avd-buck-credit-card-analysis/spark_job/
 
-      # Upload Airflow DAG to Composer
+      # ✅ Upload Airflow DAG to Cloud Composer
       - name: Upload Airflow DAG to Composer
-        run: 
-          gcloud composewr environments storage dags import \
-          --environments airflow  \ 
-          --location us-central1 \
-          --source airflow/airflow_job.py
-
-
-      
+        run: |
+          gcloud composer environments storage dags import \
+            --environment airflow \
+            --location us-central1 \
+            --source airflow/airflow_job.py
