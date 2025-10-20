@@ -50,7 +50,7 @@ if __name__ == "__main__":
         .getOrCreate()
 
     # GCP Config
-    PROJECT_ID = "feisty-flow-466306-f6"
+    PROJECT_ID = "data-proc-468906"
     GCS_BUCKET_NAME = "avd-bucket-credit-card-analysis"
     BQ_DATASET = "credit_card"
     json_file_path = f"gs://{GCS_BUCKET_NAME}/landing/transactions/transactions_*.json"

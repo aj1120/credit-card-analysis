@@ -8,7 +8,7 @@ spark = SparkSession.builder \
 # configure variables
 BUCKET_NAME = "avd-bucket-credit-card-analysis"
 CLAIMS_BUCKET_PATH = f"gs://{BUCKET_NAME}/landing/users/*.csv"
-BQ_TABLE = "feisty-flow-466306-f6.credit_card.users"
+BQ_TABLE = "data-proc-468906.credit_card.users"
 TEMP_GCS_BUCKET = f"{BUCKET_NAME}/temp/"
 # read from claims source
 claims_df = spark.read.csv(CLAIMS_BUCKET_PATH, header=True)

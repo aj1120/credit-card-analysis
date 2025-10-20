@@ -43,14 +43,14 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "813125969429-compute@developer.gserviceaccount.com",
-                    "network_uri": "projects/feisty-flow-466306-f6/global/networks/default",
-                    "subnetwork_uri": "projects/feisty-flow-466306-f6/regions/us-central1/subnetworks/default",
+                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "network_uri": "projects/data-proc-468906/global/networks/default",
+                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
             },
         },
         batch_id=batch_id_users,
-        project_id="feisty-flow-466306-f6",
+        project_id="data-proc-468906",
         region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
@@ -74,7 +74,7 @@ with DAG(
             },
         },
         batch_id=batch_id_txns,
-        project_id="feisty-flow-466306-f6",
+        project_id="data-proc-468906",
         region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
