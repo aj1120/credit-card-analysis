@@ -22,7 +22,7 @@ with DAG(
 ) as dag:
 
     # GCS Config
-    gcs_bucket = "avd-bucket-credit-card-analysis"
+    gcs_bucket = "avd-buck-credit-card-analysis"
     file_pattern = "transactions/transactions_"
     source_prefix = "transactions/"
     archive_prefix = "archive/"
@@ -67,9 +67,9 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "813125969429-compute@developer.gserviceaccount.com",
-                    "network_uri": "projects/feisty-flow-466306-f6/global/networks/default",
-                    "subnetwork_uri": "projects/feisty-flow-466306-f6/regions/us-central1/subnetworks/default",
+                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "network_uri": "projects/data-proc-468906/global/networks/default",
+                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
             },
         },
