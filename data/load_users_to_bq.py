@@ -6,7 +6,7 @@ spark = SparkSession.builder \
                     .appName("Cardholder Data Ingestion") \
                     .getOrCreate()
 # configure variables
-BUCKET_NAME = "avd-bucket-credit-card-analysis"
+BUCKET_NAME = "avd-buck-credit-card-analysis"
 CLAIMS_BUCKET_PATH = f"gs://{BUCKET_NAME}/landing/users/*.csv"
 BQ_TABLE = "data-proc-468906.credit_card.users"
 TEMP_GCS_BUCKET = f"{BUCKET_NAME}/temp/"

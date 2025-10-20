@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     # GCP Config
     PROJECT_ID = "data-proc-468906"
-    GCS_BUCKET_NAME = "avd-bucket-credit-card-analysis"
+    GCS_BUCKET_NAME = "avd-buck-credit-card-analysis"
     BQ_DATASET = "credit_card"
     json_file_path = f"gs://{GCS_BUCKET_NAME}/landing/transactions/transactions_*.json"
     BQ_CARDHOLDERS_TABLE = f"{PROJECT_ID}.{BQ_DATASET}.users"

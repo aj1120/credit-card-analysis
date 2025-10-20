@@ -43,7 +43,7 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "service_account": "794956029185-compute@developer.gserviceaccount.com",
                     "network_uri": "projects/data-proc-468906/global/networks/default",
                     "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
@@ -67,7 +67,7 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "service_account": "794956029185-compute@developer.gserviceaccount.com",
                     "network_uri": "projects/data-proc-468906/global/networks/default",
                     "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
