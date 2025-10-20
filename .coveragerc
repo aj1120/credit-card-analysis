@@ -1,5 +1,5 @@
 [run]
-omit =
+omit = 
     data/load_users_to_bq.py
 
 [report]
