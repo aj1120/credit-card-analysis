@@ -58,6 +58,6 @@ jobs:
       - name: Upload Airflow DAG to Composer
         run: |
           gcloud composer environments storage dags import \
-            --environment airflow \
+            --environment airflowenv \
             --location us-central1 \
             --source airflow/airflow_job.py
