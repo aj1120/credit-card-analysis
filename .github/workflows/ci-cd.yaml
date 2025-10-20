@@ -1,0 +1,31 @@
+name = Credit Card Transaction CICD
+
+on:
+  push:
+    branches:
+      -main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Set Up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run:
+          pip install -r utils/requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH+$PWD" >> $GITHUB_ENV
+
+      - name: Run Pytest with Coverage
+        run:
+          pytest --cov=data --cov-report=term --cov-fail-under=80 test/spark_job_test.pytest
