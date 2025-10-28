@@ -6,48 +6,32 @@ from airflow.providers.google.cloud.operators.dataproc import DataprocCreateBatc
 from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 from airflow.utils.trigger_rule import TriggerRule
 
-# Default arguments
-
+# DAG default arguments
 default_args = {
     "owner": "airflow",
-    "depends_on_past": False,
     "start_date": days_ago(1),
+    "depends_on_past": False,
     "retries": 1,
-    "retry_delay": timedelta(minutes=5),
+    "retry_delay": timedelta(minutes=5)
 }
 
-
-# DAG definition
-
 with DAG(
-    dag_id="credit_card_transactions_dataproc_dag",
+    dag_id="credit_card_transactions_dataproc_dag2",
     default_args=default_args,
-    schedule_interval="0 5 * * *",   # Runs daily at 5 AM
-    catchup=False,
-    tags=["credit-card", "dataproc", "bq"],
+    schedule_interval="0 5 * * *",
 ) as dag:
 
-   
-    # GCS Configuration
-  
+    # GCS Config
     gcs_bucket = "avd-buck-credit-card-analysis"
+    file_pattern = "transactions/transactions_"
     source_prefix = "transactions/"
     archive_prefix = "archive/"
-    
 
-    # Dataproc Configuration
-  
-    service_account = "dataproc-set@data-proc-468906.iam.gserviceaccount.com"
-    project_id = "data-proc-468906"
-    region = "us-central1"
-    network_uri = f"projects/{project_id}/global/networks/default"
-    subnetwork_uri = f"projects/{project_id}/regions/{region}/subnetworks/default"
+    # Generate unique batch IDs
+    batch_id_users = f"load-users-batch-{str(uuid.uuid4())[:8]}"
+    batch_id_txns = f"credit-card-batch-{str(uuid.uuid4())[:8]}"
 
-
-    batch_id_users = f"load-users-batch-{uuid.uuid4().hex[:8]}"
-    batch_id_txns = f"process-txns-batch-{uuid.uuid4().hex[:8]}"
-
-    # 1️ Dataproc Job 1 — Load Users to BigQuery (Lightweight)
+    #Dataproc Job 1: Load users to BigQuery
     load_users_task = DataprocCreateBatchOperator(
         task_id="load_users_to_bq",
         batch={
@@ -56,62 +40,46 @@ with DAG(
             },
             "runtime_config": {
                 "version": "2.2",
-                "properties": {
-                    # Use minimal resources
-                    "spark.executor.instances": "1",
-                    "spark.executor.cores": "1",
-                    "spark.executor.memory": "1g",
-                    "spark.driver.memory": "1g",
-                },
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": service_account,
-                    "network_uri": network_uri,
-                    "subnetwork_uri": subnetwork_uri,
+                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "network_uri": "projects/data-proc-468906/global/networks/default",
+                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
             },
         },
         batch_id=batch_id_users,
-        project_id=project_id,
-        region=region,
+        project_id="data-proc-468906",
+        region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
 
-    
-    # 2️ Dataproc Job 2 — Process Credit Card Transactions
-
+    # Dataproc Job 2: Process transactions, "version": "2.2",
     process_txns_task = DataprocCreateBatchOperator(
-        task_id="process_credit_card_txns",
+        task_id="run_credit_card_processing_job",
         batch={
             "pyspark_batch": {
                 "main_python_file_uri": f"gs://{gcs_bucket}/spark_job/spark_job.py"
             },
             "runtime_config": {
                 "version": "2.2",
-                "properties": {
-                    # Slightly higher config for processing
-                    "spark.executor.instances": "2",
-                    "spark.executor.cores": "1",
-                    "spark.executor.memory": "2g",
-                    "spark.driver.memory": "2g",
-                },
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": service_account,
-                    "network_uri": network_uri,
-                    "subnetwork_uri": subnetwork_uri,
+                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "network_uri": "projects/data-proc-468906/global/networks/default",
+                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
                 }
             },
         },
         batch_id=batch_id_txns,
-        project_id=project_id,
-        region=region,
+        project_id="data-proc-468906",
+        region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
 
-    
+    # Archive processed files
     move_files_to_archive = GCSToGCSOperator(
         task_id="move_files_to_archive",
         source_bucket=gcs_bucket,
@@ -122,5 +90,7 @@ with DAG(
         trigger_rule=TriggerRule.ALL_SUCCESS,
     )
 
-   
+    # DAG Flow
     load_users_task >> process_txns_task >> move_files_to_archive
+    # process_txns_task >> move_files_to_archive
+
