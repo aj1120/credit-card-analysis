@@ -46,7 +46,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          export_default_credentials: true
+          
 
       # ✅ Upload PySpark Job to GCS
       - name: Upload Spark Job to GCS
