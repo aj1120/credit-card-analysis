@@ -50,7 +50,7 @@ with DAG(
             },
         },
         batch_id=batch_id_users,
-        project_id="dceltic-protocol-474815-r0",
+        project_id="celtic-protocol-474815-r0",
         region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
@@ -67,7 +67,7 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
+                    "service_account": "479086980871-compute@developer.gserviceaccount.com",
                     "network_uri": "projects/celtic-protocol-474815-r0/global/networks/default",
                     "subnetwork_uri": "projects/celtic-protocol-474815-r0/regions/us-central1/subnetworks/default",
                 }
