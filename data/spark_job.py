@@ -63,8 +63,7 @@ if __name__ == "__main__":
         .option("table", BQ_CARDHOLDERS_TABLE) \
         .load()
 
-    transactions_df = spark.read.option("multiline", "true").json(json_file_path)
-
+    transactions_df = spark.read.json(json_file_path)
     # Transform
     enriched_df = process_transactions(transactions_df, cardholders_df)
 
