@@ -39,7 +39,7 @@ with DAG(
                 "main_python_file_uri": f"gs://{gcs_bucket}/spark_job/load_users_to_bq.py"
             },
             "runtime_config": {
-                "version": "2.2",
+                "version": "1.2",
             },
             "environment_config": {
                 "execution_config": {
@@ -63,7 +63,7 @@ with DAG(
                 "main_python_file_uri": f"gs://{gcs_bucket}/spark_job/spark_job.py"
             },
             "runtime_config": {
-                "version": "2.2",
+                "version": "1.2",
             },
             "environment_config": {
                 "execution_config": {
