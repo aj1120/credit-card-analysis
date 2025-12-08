@@ -6,9 +6,9 @@ spark = SparkSession.builder \
                     .appName("Cardholder Data Ingestion") \
                     .getOrCreate()
 # configure variables
-BUCKET_NAME = "avd-buck-credit-card-analysis"
+BUCKET_NAME = "credit-card-analysis"
 CLAIMS_BUCKET_PATH = f"gs://{BUCKET_NAME}/landing/users/*.csv"
-BQ_TABLE = "data-proc-468906.credit_card.users"
+BQ_TABLE = "celtic-protocol-474815-r0.credit_card.users"
 TEMP_GCS_BUCKET = f"{BUCKET_NAME}/temp/"
 # read from claims source
 claims_df = spark.read.csv(CLAIMS_BUCKET_PATH, header=True)

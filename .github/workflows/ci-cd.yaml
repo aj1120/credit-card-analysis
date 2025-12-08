@@ -51,8 +51,8 @@ jobs:
       # ✅ Upload PySpark Job to GCS
       - name: Upload Spark Job to GCS
         run: |
-          gsutil cp data/spark_job.py gs://avd-buck-credit-card-analysis/spark_job/
-          gsutil cp data/load_users_to_bq.py gs://avd-buck-credit-card-analysis/spark_job/
+          gsutil cp data/spark_job.py gs://credit-card-analysis/spark_job/
+          gsutil cp data/load_users_to_bq.py gs://credit-card-analysis/spark_job/
 
       # ✅ Upload Airflow DAG to Cloud Composer
       - name: Upload Airflow DAG to Composer

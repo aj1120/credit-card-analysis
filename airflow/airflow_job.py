@@ -22,7 +22,7 @@ with DAG(
 ) as dag:
 
     # GCS Config
-    gcs_bucket = "avd-buck-credit-card-analysis"
+    gcs_bucket = "credit-card-analysis"
     file_pattern = "transactions/transactions_"
     source_prefix = "transactions/"
     archive_prefix = "archive/"
@@ -43,14 +43,14 @@ with DAG(
             },
             "environment_config": {
                 "execution_config": {
-                    "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
-                    "network_uri": "projects/data-proc-468906/global/networks/default",
-                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
+                    "service_account": "479086980871-compute@developer.gserviceaccount.com",
+                    "network_uri": "projects/celtic-protocol-474815-r0/global/networks/default",
+                    "subnetwork_uri": "projects/celtic-protocol-474815-r0/regions/us-central1/subnetworks/default",
                 }
             },
         },
         batch_id=batch_id_users,
-        project_id="data-proc-468906",
+        project_id="dceltic-protocol-474815-r0",
         region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
@@ -68,13 +68,13 @@ with DAG(
             "environment_config": {
                 "execution_config": {
                     "service_account": "dataproc-set@data-proc-468906.iam.gserviceaccount.com",
-                    "network_uri": "projects/data-proc-468906/global/networks/default",
-                    "subnetwork_uri": "projects/data-proc-468906/regions/us-central1/subnetworks/default",
+                    "network_uri": "projects/celtic-protocol-474815-r0/global/networks/default",
+                    "subnetwork_uri": "projects/celtic-protocol-474815-r0/regions/us-central1/subnetworks/default",
                 }
             },
         },
         batch_id=batch_id_txns,
-        project_id="data-proc-468906",
+        project_id="celtic-protocol-474815-r0",
         region="us-central1",
         gcp_conn_id="google_cloud_default",
     )
